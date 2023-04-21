@@ -19,25 +19,25 @@ $(function () {
     var textareaEl = $(parentDiv).children()[1];
     var textToSave = $(textareaEl).val();
     var savedText = {
-      timeBlock: timeBlock,
-      savedText: textToSave
+      "timeBlock": timeBlock,
+      "savedText": textToSave
     }
+    existingActivitiesArray = existingActivitiesArray.filter((d)=>d.timeBlock!==timeBlock)
     existingActivitiesArray.push(savedText)
-    // existingActivitiesArray.length == 0 ? existingActivitiesArray.push(savedText) : (
-    //   existingActivitiesArray.findIndex(savedActivites)
-    // )
-localStorage.setItem("savedActivites", JSON.stringify(existingActivitiesArray));
+localStorage.setItem("savedActivities", JSON.stringify(existingActivitiesArray));
+init();
   })
 function init() {
-  var loadedTime = JSON.parse(localStorage.getItem(existingActivitiesArray.timeBlock));
-  var loadedText = JSON.parse(localStorage.getItem(existingActivitiesArray.textToSave));
-    for (var i = 0; i < existingActivitiesArray.length; i++){
-      var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
-      if (hours === existingActivitiesArray[i].timeBlock){
-        $("#hour- " + [i]).text(existingActivitiesArray[i].text)
+  var hoursArray = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+    for (var i = 0; i < hoursArray.length; i++){
+      var miniList = existingActivitiesArray.filter((d)=>d.timeBlock==="hour-" + hoursArray[i])
+      console.log(hoursArray[i], existingActivitiesArray)
+      if (miniList.length > 0){
+        $("#hour-" + hoursArray[i] + " textarea").val(miniList[0].savedText);
+      } 
     }
   } 
-}
+
 
 
 
